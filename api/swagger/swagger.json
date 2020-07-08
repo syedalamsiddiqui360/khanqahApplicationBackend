@@ -1,0 +1,154 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Swagger for VVE",
+        "version": "1.0.0"
+    },
+    "host": "localhost:9000",
+    "basePath": "/",
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "securityDefinitions": {
+        "api_key": {
+          "type": "apiKey",
+          "name": "token",
+          "in": "header"
+        }
+      },
+    "paths": {
+        "/user/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login user",
+                "description": "This can only be done by the logged in user.",
+                "operationId": "loginUser",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Get LoggedIn",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Login"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/site/all": {
+            "security": [
+                {
+                  "api_key": []
+                }
+              ],
+            "post": {
+                "tags": [
+                    "Site"
+                ],
+                "summary": "All Sites Data",
+                "description": "This can only be done by the logged in user.",
+                "operationId": "",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/site/show/{siteID}": {
+            "post": {
+                "tags": [
+                    "Site"
+                ],
+                "summary": "Get Single Site Data",
+                "description": "This can only be done by the logged in user.",
+                "operationId": "",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "siteID",
+                        "description": "Site ID",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/pov/all": {
+            "post": {
+                "tags": [
+                    "Pov"
+                ],
+                "summary": "All Pov Data",
+                "description": "This can only be done by the logged in user.",
+                "operationId": "",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        }
+        
+    },
+    "definitions": {
+        "Login": {
+            "type": "object",
+            "properties": {
+                "username": {
+                    "type": "string",
+                    "required": true
+                },
+                "password": {
+                    "type": "string",
+                    "required": true
+                }
+            }
+        }
+        
+        
+    }
+}
+
