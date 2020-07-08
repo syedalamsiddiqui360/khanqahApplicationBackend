@@ -1,0 +1,7 @@
+{
+  "name": "PDT",
+  "version": "1.0.0",
+  "description": "Route API for PDT",
+  "main": "index.js",
+  "license": "MIT"
+}
