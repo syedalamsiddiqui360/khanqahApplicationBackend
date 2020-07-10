@@ -1,0 +1,24 @@
+# misc
+.idea
+
+# pkgs
+node_modules/
+
+# build
+build
+
+# logs
+npm-debug.log
+
+# dotfiles
+.env
+.DS_Store
+
+# cache
+.eslintcache
+
+# ide
+.vscode/settings.json
+
+# testing
+coverage/
