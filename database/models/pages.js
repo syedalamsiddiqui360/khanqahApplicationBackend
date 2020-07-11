@@ -1,21 +1,20 @@
 const Sequelize = require("sequelize");
 const db = require("../connection");
-const bcrypt = require("bcrypt");
 
-const User = db.define(
-  "user",
+const pages = db.define(
+  "pages",
   {
     id: {
       type: Sequelize.BIGINT(11),
       autoIncrement: true,
       primaryKey: true,
     },
-    username: {
-      type: Sequelize.STRING,
+    title: {
+      type: Sequelize.STRING(255),
     },
-    password: {
-      type: Sequelize.STRING,
-    },
+    slug: {
+      type: Sequelize.STRING(255),
+    }
   },
   {
     paranoid: true,
@@ -25,7 +24,8 @@ const User = db.define(
     // if you don't want that, set the following
     freezeTableName: true,
     // define the table's name
-    tableName: "user",
+    tableName: "pages",
   }
 );
-module.exports = User;
+
+module.exports = pages;

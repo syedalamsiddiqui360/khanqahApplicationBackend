@@ -33,10 +33,6 @@ app.use(
 
 
 const userRoutes = require("./api/routes/user");
-const siteRoutes = require("./api/routes/site");
-const povRoutes = require("./api/routes/pov");
-const documentsRoutes = require("./api/routes/documents");
-const siteUsersRoutes = require("./api/routes/site_users");
 
 app.use(morgan("dev")); // it will log all the requests.
 app.use(bodyParser.urlencoded({ extended: false })); // it will handle request body
@@ -58,10 +54,6 @@ app.use((req, res, next) => {
 
 
 app.use("/user", userRoutes);
-app.use("/site", siteRoutes);
-app.use("/pov", povRoutes);
-app.use("/documents", documentsRoutes);
-app.use("/site_users", siteUsersRoutes);
 
 // //error handling
 app.use((req, res, next) => {
