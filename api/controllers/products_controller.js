@@ -16,13 +16,13 @@ exports.getAll = async (req, res, next) => {
 exports.getById = async (req, res, next) => {
   try {
     const data = {};
-    products.findOne({ where: { id: id } })
+    products.findOne({ where: { id: req.params.id } })
     .then(async function (response) {
-        data=response;
+        res.send({ response });
     }).error(function (error) {
         
     });    
-    res.send({ data });
+    
   } catch (e) {
     res.statusCode = 300;
     res.send("Please Check log DataBase Error");

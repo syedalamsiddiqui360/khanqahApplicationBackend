@@ -18,31 +18,21 @@
         }
       },
     "paths": {
-        "/user/login": {
+        "/products": {
             "post": {
                 "tags": [
-                    "Auth"
+                    "Products"
                 ],
-                "summary": "Login user",
-                "description": "This can only be done by the logged in user.",
-                "operationId": "loginUser",
+                "summary": "All Products",
+                "description": "",
+                "operationId": "Products",
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
                     "application/json"
                 ],
-                "parameters": [
-                    {
-                        "in": "body",
-                        "name": "body",
-                        "description": "Get LoggedIn",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/Login"
-                        }
-                    }
-                ],
+                
                 "responses": {
                     "default": {
                         "description": "successful operation"
@@ -50,40 +40,13 @@
                 }
             }
         },
-        "/site/all": {
-            "security": [
-                {
-                  "api_key": []
-                }
-              ],
+        "/products/{productID}": {
             "post": {
                 "tags": [
-                    "Site"
+                    "Products"
                 ],
-                "summary": "All Sites Data",
-                "description": "This can only be done by the logged in user.",
-                "operationId": "",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [],
-                "responses": {
-                    "default": {
-                        "description": "successful operation"
-                    }
-                }
-            }
-        },
-        "/site/show/{siteID}": {
-            "post": {
-                "tags": [
-                    "Site"
-                ],
-                "summary": "Get Single Site Data",
-                "description": "This can only be done by the logged in user.",
+                "summary": "Get Single Product",
+                "description": "",
                 "operationId": "",
                 "consumes": [
                     "application/json"
@@ -94,8 +57,8 @@
                 "parameters": [
                     {
                         "in": "path",
-                        "name": "siteID",
-                        "description": "Site ID",
+                        "name": "productID",
+                        "description": "Product ID",
                         "schema": {
                             "type": "integer"
                         },
