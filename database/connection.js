@@ -22,7 +22,7 @@ db.authenticate()
   });
   db.sync({
     logging:console.log,
-    force:false //The "force: true" option for sync will add "DROP TABLE IF EXISTS" to the create statements,
+    force:true //The "force: true" option for sync will add "DROP TABLE IF EXISTS" to the create statements,
   }).then(()=>{
     console.log("DB sync sucessfull");
   })
