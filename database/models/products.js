@@ -1,5 +1,8 @@
 const Sequelize = require("sequelize");
 const db = require("../connection");
+const product_content=require("./product_content");
+const product_files=require("./product_files");
+const product_meta=require("./product_meta");
 
 const products = db.define(
   "products",
@@ -21,5 +24,7 @@ const products = db.define(
     tableName: "products",
   }
 );
-
+products.hasMany(product_content, { foreignKey: 'product_id', as: 'product_content' });
+products.hasMany(product_files, { foreignKey: 'product_id', as: 'product_files' });
+products.hasMany(product_meta, { foreignKey: 'product_id', as: 'product_meta' });
 module.exports = products;
