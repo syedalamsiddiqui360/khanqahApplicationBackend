@@ -1,7 +1,4 @@
 const products = require("../../database/models/products");
-const { validationResult } = require("express-validator");
-
-//get  all users from user model
 
 exports.getAll = async (req, res, next) => {
   try {
