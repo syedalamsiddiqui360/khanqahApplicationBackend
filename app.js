@@ -35,6 +35,7 @@ app.use(
 const userRoutes = require("./api/routes/user");
 const productRoutes = require("./api/routes/products");
 const languageRoutes = require("./api/routes/languages");
+const cmsPageRoutes = require("./api/routes/cms_pages");
 
 app.use(morgan("dev")); // it will log all the requests.
 app.use(bodyParser.urlencoded({ extended: false })); // it will handle request body
@@ -58,6 +59,7 @@ app.use((req, res, next) => {
 app.use("/user", userRoutes);
 app.use("/products", productRoutes);
 app.use("/languages", languageRoutes);
+app.use("/page-content", cmsPageRoutes);
 
 // //error handling
 app.use((req, res, next) => {

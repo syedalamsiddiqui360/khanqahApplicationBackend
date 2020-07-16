@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-        "title": "Swagger for VVE",
+        "title": "Swagger for PDT",
         "version": "1.0.0"
     },
     "host": "localhost:9000",
@@ -31,6 +31,17 @@
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Language ID",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/Language ID"
+                        }
+                    }
                 ],
                 
                 "responses": {
@@ -62,9 +73,19 @@
                         "schema": {
                             "type": "integer"
                         },
-                        "required": true
+                        "required": false
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Language ID",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/Language ID"
+                        }
                     }
                 ],
+                
                 "responses": {
                     "default": {
                         "description": "successful operation"
@@ -86,7 +107,68 @@
                 "produces": [
                     "application/json"
                 ],
-                
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "pageSlug",
+                        "description": "Page Slug",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Language ID",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/Language ID"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+            
+        },
+        "/page-content/{pageSlug}": {
+            "post": {
+                "tags": [
+                    "CMS Pages"
+                ],
+                "summary": "Get Single Page",
+                "description": "",
+                "operationId": "",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "pageSlug",
+                        "description": "Page Slug",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Language ID",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Language ID"
+                        }
+                    }
+                ],
                 "responses": {
                     "default": {
                         "description": "successful operation"
@@ -98,16 +180,11 @@
         
     },
     "definitions": {
-        "Login": {
+        "Language ID": {
             "type": "object",
             "properties": {
-                "username": {
-                    "type": "string",
-                    "required": true
-                },
-                "password": {
-                    "type": "string",
-                    "required": true
+                "language_id": {
+                    "type": "integer"
                 }
             }
         }
