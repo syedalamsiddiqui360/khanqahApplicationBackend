@@ -115,6 +115,40 @@
             }
             
         },
+        "/menu-links": {
+            "post": {
+                "tags": [
+                    "Menu Links"
+                ],
+                "summary": "Get All Menu Links",
+                "description": "",
+                "operationId": "",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Language ID",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/Language ID"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+            
+        },
         "/page-content/{pageSlug}": {
             "post": {
                 "tags": [

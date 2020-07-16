@@ -14,6 +14,8 @@ const product_files = require('./product_files');
 const cart = require('./cart');
 const orders = require('./orders');
 const transactions = require('./transactions');
+const menu_links = require('./menu_links');
+const menu_link_content = require('./menu_link_content');
 
 
 
@@ -33,4 +35,6 @@ module.exports = {
   cart, 
   orders, 
   transactions, 
+  menu_links, 
+  menu_link_content, 
 }
