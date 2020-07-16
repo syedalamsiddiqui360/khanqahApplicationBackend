@@ -9,6 +9,13 @@ const product_meta = db.define(
       autoIncrement: true,
       primaryKey: true,
     },
+    product_id: {
+      type: Sequelize.BIGINT(11),
+      references: {
+        model: "products", //  refers to table name
+        key: "id", //  refers to column name in reference table
+      },
+    },
     title: {
       type: Sequelize.STRING(255),
     },

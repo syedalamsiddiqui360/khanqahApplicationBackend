@@ -1,5 +1,6 @@
 const Sequelize = require("sequelize");
 const db = require("../connection");
+const products=require("./products");
 
 const product_content = db.define(
   "product_content",
@@ -51,4 +52,8 @@ const product_content = db.define(
   }
 );
 
+//product_content.belongsTo("products", { foreignKey: 'product_id' });
+product_content.associate = (models) => {
+  product_content.belongsTo(models.products, {foreignKey: 'id', as: 'product'});
+};
 module.exports = product_content;

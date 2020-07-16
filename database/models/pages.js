@@ -1,5 +1,7 @@
 const Sequelize = require("sequelize");
 const db = require("../connection");
+const page_content = require("./page_content");
+const page_files = require("./page_files");
 
 const pages = db.define(
   "pages",
@@ -27,5 +29,6 @@ const pages = db.define(
     tableName: "pages",
   }
 );
-
+pages.hasMany(page_content, { foreignKey: 'page_id'});
+pages.hasMany(page_files, { foreignKey: 'page_id', as: 'page_files' });
 module.exports = pages;

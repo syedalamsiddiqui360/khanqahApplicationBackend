@@ -1,5 +1,6 @@
 const Sequelize = require("sequelize");
 const db = require("../connection");
+const pages = require("./pages");
 
 const page_content = db.define(
   "page_content",
@@ -42,4 +43,7 @@ const page_content = db.define(
   }
 );
 
+page_content.associate = (models) => {
+  page_content.belongsTo(models.pages, {foreignKey: 'id', as: 'page'});
+};
 module.exports = page_content;
