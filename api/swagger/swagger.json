@@ -71,6 +71,28 @@
                     }
                 }
             }
+        },
+        "/languages": {
+            "post": {
+                "tags": [
+                    "Languages"
+                ],
+                "summary": "Get All Languages",
+                "description": "",
+                "operationId": "",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
         }
         
         
