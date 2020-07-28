@@ -11,8 +11,12 @@ const products = db.define(
       type: Sequelize.BIGINT(11),
       autoIncrement: true,
       primaryKey: true,
-    }
+    },
+    price: {
+      type: Sequelize.DOUBLE,
+    },
   },
+  
   {
     paranoid: true,
     timestamps: true,
