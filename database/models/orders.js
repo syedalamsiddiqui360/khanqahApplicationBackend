@@ -23,6 +23,12 @@ const orders = db.define(
         key: "id", //  refers to column name in reference table
       },
     },
+    quantity: {
+      type: Sequelize.DOUBLE,
+    },
+    price: {
+      type: Sequelize.DOUBLE,
+    },
     cart_id: {
       type: Sequelize.BIGINT(11),
       references: {

@@ -93,6 +93,138 @@
                 }
             }
         },
+        "/cart/get_cart_items": {
+            "post": {
+                "tags": [
+                    "Cart"
+                ],
+                "summary": "Get Items of Cart",
+                "description": "",
+                "operationId": "",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Get-Cart-Items",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Get-Cart-Items"
+                        }
+                    }
+                ],
+                
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/cart/add_to_cart": {
+            "post": {
+                "tags": [
+                    "Cart"
+                ],
+                "summary": "Add item to cart",
+                "description": "",
+                "operationId": "",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Add-To-Cart Object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Add-To-Cart"
+                        }
+                    }
+                ],
+                
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/cart/update_cart_quantity": {
+            "put": {
+                "tags": [
+                    "Cart"
+                ],
+                "summary": "Update Quantity of Cart item",
+                "description": "",
+                "operationId": "",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Update-Cart Object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Update-Cart-Quantity"
+                        }
+                    }
+                ],
+                
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/cart/delete_cart_item": {
+            "delete": {
+                "tags": [
+                    "Cart"
+                ],
+                "summary": "Update Quantity of Cart item",
+                "description": "",
+                "operationId": "",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Delete-Cart-Item Object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Delete-Cart-Item"
+                        }
+                    }
+                ],
+                
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
         "/languages": {
             "post": {
                 "tags": [
@@ -199,6 +331,68 @@
             "properties": {
                 "language_id": {
                     "type": "integer"
+                }
+            }
+        },
+        "Get-Cart-Items": {
+            "type": "object",
+            "properties": {
+                "user_id": {
+                    "type": "integer",
+                    "required": "true"
+                },
+                "cart_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "Add-To-Cart": {
+            "type": "object",
+            "properties": {
+                "user_id": {
+                    "type": "integer",
+                    "required": "true"
+                },
+                "quantity": {
+                    "type": "integer",
+                    "required": "true"
+                },
+                "product_id": {
+                    "type": "integer",
+                    "required": "true"
+                },
+                "cart_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "Update-Cart-Quantity": {
+            "type": "object",
+            "properties": {
+                "order_id": {
+                    "type": "integer",
+                    "required": "true"
+                },
+                "quantity": {
+                    "type": "integer",
+                    "required": "true"
+                },
+                "user_id": {
+                    "type": "integer",
+                    "required": "true"
+                }
+            }
+        },
+        "Delete-Cart-Item": {
+            "type": "object",
+            "properties": {
+                "order_id": {
+                    "type": "integer",
+                    "required": "true"
+                },
+                "user_id": {
+                    "type": "integer",
+                    "required": "true"
                 }
             }
         }

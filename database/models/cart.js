@@ -1,5 +1,6 @@
 const Sequelize = require("sequelize");
 const db = require("../connection");
+const orders = require("./orders");
 
 const cart = db.define(
   "cart",
@@ -13,6 +14,13 @@ const cart = db.define(
       type: Sequelize.BIGINT(11),
       references: {
         model: "users", //  refers to table name
+        key: "id", //  refers to column name in reference table
+      },
+    },
+    product_id: {
+      type: Sequelize.BIGINT(11),
+      references: {
+        model: "products", //  refers to table name
         key: "id", //  refers to column name in reference table
       },
     },
@@ -38,7 +46,15 @@ const cart = db.define(
     freezeTableName: true,
     // define the table's name
     tableName: "cart",
+
+    
   }
 );
+
+
+cart.hasMany(orders, { foreignKey: 'cart_id'});
+cart.prototype.calculatePrice =  function() {
+   console.log(this.orders);;
+};
 
 module.exports = cart;
