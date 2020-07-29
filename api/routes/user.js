@@ -16,6 +16,6 @@ router.post("/login", userRequests.loginRequest, UsersController.login);
 
 
 //checkAuth IS ASSIGNED TO THE ROUTE AS MIDDLEWARE BECAUSE ITS A PROTECTED ROUTE AND MUST PASS TOKEN VERIFICATION
-router.post("/store", checkAuth,   UsersController.createUser);
+router.post("/sign_up",  userRequests.signUpRequest ,  UsersController.createUser);
 
 module.exports = router;
