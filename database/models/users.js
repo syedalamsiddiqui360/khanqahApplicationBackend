@@ -25,6 +25,9 @@ const user = db.define(
     },
     email: {
       type: Sequelize.STRING(70),
+      validate: {
+        isEmail: true, // checks for email format (foo@bar.com)
+      },
     },
     username: {
       type: Sequelize.STRING(70),
