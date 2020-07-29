@@ -4,7 +4,7 @@
         "title": "Swagger for PDT",
         "version": "1.0.0"
     },
-    "host": "localhost:9000",
+    "host": "backend.develop.pdt.agifly.cloud",
     "basePath": "/",
     "schemes": [
         "http",
@@ -321,6 +321,39 @@
                     }
                 }
             }
+        },
+        "/user/sign_up": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Sign Up User",
+                "description": "",
+                "operationId": "",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "User Sign Up Params",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/User-Sign-Up"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
         }
         
         
@@ -395,7 +428,34 @@
                     "required": "true"
                 }
             }
+        },
+        "User-Sign-Up": {
+            "type": "object",
+            "properties": {
+                "first_name": {
+                    "type": "string",
+                    "required": "true"
+                },
+                "last_name": {
+                    "type": "string",
+                    "required": "true"
+                },
+                "username": {
+                    "type": "string",
+                    "required": "true"
+                },
+                "password": {
+                    "type": "string",
+                    "required": "true"
+                },
+                "email": {
+                    "type": "string",
+                    "required": "true"
+                }
+                
+            }
         }
+
         
         
     }

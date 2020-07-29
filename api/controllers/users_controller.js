@@ -2,7 +2,7 @@ const user = require("../../database/models/users");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { validationResult } = require("express-validator");
-require('dotenv').config()
+require("dotenv").config();
 
 //get  all users from user model
 exports.getAllUsers = async (req, res, next) => {
@@ -18,7 +18,7 @@ exports.getAllUsers = async (req, res, next) => {
 
 //it will handle login request
 exports.login = (req, res, next) => {
-  const errors = validationResult(req); //if errors from user_request.js 
+  const errors = validationResult(req); //if errors from user_request.js
   if (!errors.isEmpty()) {
     res.status(422).json({ errors: errors.array() });
     return;
@@ -33,7 +33,7 @@ exports.login = (req, res, next) => {
           message: "Incorrect Username",
         });
       } else {
-        resoponse_compare=await bcrypt.compare(password, userData.password);
+        resoponse_compare = await bcrypt.compare(password, userData.password);
         if (resoponse_compare) {
           //if password compared successfully, mean users logged in. We will assign him a JWT token that user will use to access protected end points
           const token = jwt.sign(
@@ -50,7 +50,7 @@ exports.login = (req, res, next) => {
             user: userData,
             token: token,
           });
-        }else{
+        } else {
           return res.status(401).json({
             message: "Incorrect Password",
           });
@@ -63,6 +63,28 @@ exports.login = (req, res, next) => {
 exports.createUser = async (req, res, next) => {
   try {
     const { username, password } = req.body;
+    const user_agent = `${req.headers["user-agent"]} `;
+    const ip = req.connection.remoteAddress;
+    var device_name = "";
+    console.log("here");
+    // var OsName = parser(user_agent).os.name;
+    // if (OsName === "iOS" || OsName === "Android") {
+    //   device_name = OsName;
+    // } else if (
+    //   OsName === "Windows" ||
+    //   OsName === "Linux" ||
+    //   OsName === "Mac OS" ||
+    //   OsName === "Unix"
+    //   ) {
+    //     device_name = "computer";
+    //   } else {
+    //     device_name = "others";
+    //   }
+    //   const device_data = {
+    //     type: user_agent + "|" + ip,
+    //     device_name: device_name,
+    //   };
+
     const encyptPassword = await bcrypt.hash(password, 10); //encrypt password using bcrypt technique
     const data = {
       username: username,
@@ -70,9 +92,10 @@ exports.createUser = async (req, res, next) => {
     };
     const response = await user.create(data);
     return res.status(200).json(response);
-  } catch (error) {
+  } catch (ex) {
     return res.status(401).json({
       message: "Error creating User",
+      error: ex,
     });
   }
 };
