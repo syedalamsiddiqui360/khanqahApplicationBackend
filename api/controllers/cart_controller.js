@@ -260,17 +260,42 @@ exports.checkout = async ( req,res) => {
         value: "10.00",
         currency: "EUR",
       },
-      description: "My first API payment",
-      webhookUrl: "https://backend.develop.pdt.agifly.cloud/receive-payment-response",
+      description: 'Order #12345',
+      method:'creditcard',
+      redirectUrl: 'https://backend.develop.pdt.agifly.cloud/cart/receive-payment-response',
+      webhookUrl: 'https://backend.develop.pdt.agifly.cloud/cart/receive-payment-response',
+      metadata: {
+        order_id: '12345',
+      },
     })
     .then((payment) => {
-      res.status(200).json(payment);
+      console.log("payment",payment);
+      res.status(200).json({
+        "payment_link":payment._links.checkout.href
+      });
     })
     .catch((error) => {
+      console.log(error);
       res.status(500).json(error);
     });
 };
 
+
+
 exports.receivePaymentResponse = async (req,res) => {
+  var transaction_id=req.body.id;
+  const mollieClient = createMollieClient({
+    apiKey: "test_bv74rGDe9wC22EcHdyw3d7C9BgQtRw",
+  });
+  
+  mollieClient.payments.get(transaction_id)
+    .then((payment) => {
+      res.status(200).json(payment);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json(error);
+    });
+
   res.status(200).json(req.body);
 };
