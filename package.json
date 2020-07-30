@@ -10,9 +10,9 @@
   "author": "Hamza Aslam",
   "license": "ISC",
   "dependencies": {
+    "@mollie/api-client": "^3.2.3",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
-    "swagger-ui-express": "^4.1.2",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-validator": "^6.5.0",
@@ -20,7 +20,8 @@
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
     "mysql2": "^2.1.0",
-    "sequelize": "^5.21.13"
+    "sequelize": "^5.21.13",
+    "swagger-ui-express": "^4.1.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"

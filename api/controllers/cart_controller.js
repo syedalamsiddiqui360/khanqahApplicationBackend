@@ -3,24 +3,25 @@ const cart = require("../../database/models/cart");
 const orders = require("../../database/models/orders");
 const products = require("../../database/models/products");
 const { validationResult } = require("express-validator");
+const { createMollieClient } = require("@mollie/api-client");
+
 const { response } = require("express");
 
 //Get Cart by ID
 exports.getCartByID = async (req, res, next) => {
   try {
     const { user_id, cart_id } = req.body;
-    var cart_response = await cart
-      .findOne({
-        include: ["orders"],
-        where: [
-          {
-            id: cart_id,
-          },
-          {
-            user_id: user_id,
-          },
-        ],
-      });
+    var cart_response = await cart.findOne({
+      include: ["orders"],
+      where: [
+        {
+          id: cart_id,
+        },
+        {
+          user_id: user_id,
+        },
+      ],
+    });
 
     return res.status(200).json(cart_response);
   } catch (e) {
@@ -244,4 +245,32 @@ update_cart_calculations = async (cart_id) => {
     console.log("cart_id", cart_id);
     console.log("update_response", update_response);
   }
+};
+
+exports.checkout = async ( req,res) => {
+
+  console.log("checkout called");
+  const mollieClient = createMollieClient({
+    apiKey: "test_bv74rGDe9wC22EcHdyw3d7C9BgQtRw",
+  });
+  console.log("checkout object created");
+  mollieClient.payments
+    .create({
+      amount: {
+        value: "10.00",
+        currency: "EUR",
+      },
+      description: "My first API payment",
+      webhookUrl: "https://backend.develop.pdt.agifly.cloud/receive-payment-response",
+    })
+    .then((payment) => {
+      res.status(200).json(payment);
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
+};
+
+exports.receivePaymentResponse = async (req,res) => {
+  res.status(200).json(req.body);
 };
