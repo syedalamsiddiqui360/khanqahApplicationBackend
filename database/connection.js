@@ -1,9 +1,9 @@
 require('dotenv').config()
 const Sequelize = require('sequelize');
 
-const db= new Sequelize("pdt_develop", "pdt_develop", "rZvWNJleJ4L2", {
-  host:"pa813001-001.dbaas.ovh.net",
-  port:"35249",
+const db= new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
+  host:process.env.DB_HOST,
+  port:process.env.DB_PORT,
   dialect: 'mysql',
   dialectOptions: {
     timezone: "local",
