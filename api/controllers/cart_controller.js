@@ -198,6 +198,8 @@ exports.deleteCartItem = async (req, res, next) => {
 
 calculate_product_price = async (product_id, quantity) => {};
 
+
+/*****THIS FUNCTION IS USED TO UPDATE CART TABLE WHEN EVER CHANGES (INSERT UPDATE DELETE) IN ORDER TABLE ENTRIES. IT CALCULATE CART TOTAL BASE ON ORDER ITEMS.****/
 update_cart_calculations = async (cart_id) => {
   var cart_object = await cart.findOne({
     where: { id: cart_id },
@@ -263,7 +265,8 @@ exports.checkout = async ( req,res) => {
       description: 'Order #12345',
       method:'creditcard',
       redirectUrl: 'https://backend.develop.pdt.agifly.cloud/cart/receive-payment-response',
-      webhookUrl: 'https://backend.develop.pdt.agifly.cloud/cart/receive-payment-response',
+      //webhookUrl: 'https://backend.develop.pdt.agifly.cloud/cart/receive-payment-response',
+      webhookUrl: 'https://pdt.requestcatcher.com/',
       metadata: {
         order_id: '12345',
       },
@@ -283,19 +286,23 @@ exports.checkout = async ( req,res) => {
 
 
 exports.receivePaymentResponse = async (req,res) => {
-  var transaction_id=req.body.id;
-  const mollieClient = createMollieClient({
-    apiKey: "test_bv74rGDe9wC22EcHdyw3d7C9BgQtRw",
-  });
+  console.log("getting payment details");
+  console.log("body",req.body);
+  res.status(200).json("msg");
+  // var transaction_id=req.body.id;
+  // const mollieClient = createMollieClient({
+  //   apiKey: "test_bv74rGDe9wC22EcHdyw3d7C9BgQtRw",
+  // });
   
-  mollieClient.payments.get(transaction_id)
-    .then((payment) => {
-      res.status(200).json(payment);
-    })
-    .catch((error) => {
-      console.log(error);
-      res.status(500).json(error);
-    });
+  // mollieClient.payments.get(transaction_id)
+  //   .then((payment) => {
+  //     console.log("transaction details",payment);
+  //     res.status(200).json(payment);
+  //   })
+  //   .catch((error) => {
+  //     console.log(error);
+  //     res.status(500).json(error);
+  //   });
 
-  res.status(200).json(req.body);
+  
 };
