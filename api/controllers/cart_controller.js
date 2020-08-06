@@ -259,12 +259,12 @@ exports.checkout = async (req, res) => {
   //first validate if cart id exists
   //var cart_id = req.body.cart_id;
   var cart_id = 12;
-  cart_response = await cart.findOne({ where: { id: cart_id } });
-  if (!cart_response) {
-    return res.status(422).json({
-      message: "Invalid Cart ID",
-    });
-  }
+  // cart_response = await cart.findOne({ where: { id: cart_id } });
+  // if (!cart_response) {
+  //   return res.status(422).json({
+  //     message: "Invalid Cart ID",
+  //   });
+  // }
 
   mollieClient.payments
     .create({
