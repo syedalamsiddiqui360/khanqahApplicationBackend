@@ -299,6 +299,7 @@ exports.checkout = async (req, res) => {
 
 exports.receivePaymentResponse = async (req, res) => {
   console.log("getting payment details");
+  console.log("req",req);
   //console.log("body", req.body);
   //var transaction_id = req.body.id;
   res.status(200).json(req.body);
