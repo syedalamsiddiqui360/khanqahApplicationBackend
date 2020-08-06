@@ -257,19 +257,19 @@ exports.checkout = async (req, res) => {
 
   // cart id to get cart. And from cart object we will get order price.
   //first validate if cart id exists
-  //var cart_id = req.body.cart_id;
-  var cart_id = 12;
-  // cart_response = await cart.findOne({ where: { id: cart_id } });
-  // if (!cart_response) {
-  //   return res.status(422).json({
-  //     message: "Invalid Cart ID",
-  //   });
-  // }
+  var cart_id = req.body.cart_id;
+  //var cart_id = 12;
+  cart_response = await cart.findOne({ where: { id: cart_id } });
+  if (!cart_response) {
+    return res.status(422).json({
+      message: "Invalid Cart ID",
+    });
+  }
 
   mollieClient.payments
     .create({
       amount: {
-        value: "10.00",
+        value: cart_id.price,
         currency: "EUR",
       },
       description: "Order #"+cart_id,
@@ -279,7 +279,7 @@ exports.checkout = async (req, res) => {
       webhookUrl: 'https://backend.develop.pdt.agifly.cloud/cart/receive-payment-response',
       //webhookUrl: "https://pdt.requestcatcher.com/",
       metadata: {
-        order_id: "12345",
+        order_id: "Order #"+cart_id,
       },
     })
     .then((payment) => {
@@ -303,24 +303,24 @@ exports.receivePaymentResponse =  (req, res) => {
   //console.log("body", req.body);
   var transaction_id =  req.body.id;
   console.log("transaction_id",transaction_id);
-  res.status(200).json(transaction_id);
-  // console.log("transaction_id",transaction_id);
-  // const mollieClient = createMollieClient({
-  //   apiKey: "test_bv74rGDe9wC22EcHdyw3d7C9BgQtRw",
-  // });
+  //res.status(200).json(transaction_id);
+  console.log("transaction_id",transaction_id);
+  const mollieClient = createMollieClient({
+    apiKey: "test_bv74rGDe9wC22EcHdyw3d7C9BgQtRw",
+  });
 
-  // mollieClient.payments
-  //   .get(transaction_id)
-  //   .then((payment) => {
-  //     console.log("transaction details", payment);
-  //     res.status(200).json(payment);
-  //   })
-  //   .catch((error) => {
-  //     console.log(error);
-  //     res.status(422).json({
-  //       error: error,
-  //       message:
-  //         "error in getting transaction details. Check your transaction id.",
-  //     });
-  //   });
+  mollieClient.payments
+    .get(transaction_id)
+    .then((payment) => {
+      console.log("transaction details", payment);
+      res.status(200).json(payment);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(422).json({
+        error: error,
+        message:
+          "error in getting transaction details. Check your transaction id.",
+      });
+    });
 };
