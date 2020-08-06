@@ -257,7 +257,8 @@ exports.checkout = async (req, res) => {
 
   // cart id to get cart. And from cart object we will get order price.
   //first validate if cart id exists
-  var cart_id = req.body.cart_id;
+  //var cart_id = req.body.cart_id;
+  var cart_id = 12;
   cart_response = await cart.findOne({ where: { id: cart_id } });
   if (!cart_response) {
     return res.status(422).json({
@@ -298,9 +299,10 @@ exports.checkout = async (req, res) => {
 
 exports.receivePaymentResponse = async (req, res) => {
   console.log("getting payment details");
-  console.log("body", req.body);
-  res.status(200).json("msg");
-  // var transaction_id = req.body.id;
+  //console.log("body", req.body);
+  //var transaction_id = req.body.id;
+  res.status(200).json(req.body);
+  // console.log("transaction_id",transaction_id);
   // const mollieClient = createMollieClient({
   //   apiKey: "test_bv74rGDe9wC22EcHdyw3d7C9BgQtRw",
   // });

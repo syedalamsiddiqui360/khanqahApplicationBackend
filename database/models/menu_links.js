@@ -21,6 +21,10 @@ const menu_links = db.define(
     display_order: {
       type: Sequelize.INTEGER,
     },
+    is_footer_link: {
+      type: Sequelize.BOOLEAN,
+      defaultValue:0
+    },
     is_active: {
       type: Sequelize.BOOLEAN,
       defaultValue:1

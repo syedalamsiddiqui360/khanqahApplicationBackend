@@ -247,12 +247,46 @@
             }
             
         },
-        "/menu-links": {
+        "/menu-links/header_links": {
             "post": {
                 "tags": [
                     "Menu Links"
                 ],
-                "summary": "Get All Menu Links",
+                "summary": "Get All Menu Header Links",
+                "description": "",
+                "operationId": "",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Language ID",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/Language ID"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+            
+        },
+        "/menu-links/footer_links": {
+            "post": {
+                "tags": [
+                    "Menu Links"
+                ],
+                "summary": "Get All Menu Footer Links",
                 "description": "",
                 "operationId": "",
                 "consumes": [
