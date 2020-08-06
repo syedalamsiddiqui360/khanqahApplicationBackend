@@ -265,11 +265,12 @@ exports.checkout = async (req, res) => {
       message: "Invalid Cart ID",
     });
   }
+  console.log("cart_response",cart_response.price);
 
   mollieClient.payments
     .create({
       amount: {
-        value: cart_id.price,
+        value: cart_response.price.toFixed(2),
         currency: "EUR",
       },
       description: "Order #"+cart_id,
@@ -283,7 +284,7 @@ exports.checkout = async (req, res) => {
       },
     })
     .then((payment) => {
-      console.log("payment", payment);
+      //console.log("payment", payment);
       res.status(200).json({
         payment_link: payment._links.checkout.href,
       });

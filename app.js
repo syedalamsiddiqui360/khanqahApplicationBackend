@@ -41,7 +41,7 @@ const cartRoutes = require("./api/routes/cart");
 
 app.use(morgan("dev")); // it will log all the requests.
 app.use(bodyParser.json()); // it will handle request body
-app.use(bodyParser.urlencoded({ extended: true })); // it will handle request body
+app.use(bodyParser.urlencoded({ extended: false })); // it will handle request body
 
 //handling cors
 app.use((req, res, next) => {
