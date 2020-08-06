@@ -297,12 +297,12 @@ exports.checkout = async (req, res) => {
     });
 };
 
-exports.receivePaymentResponse = async (req, res) => {
+exports.receivePaymentResponse =  (req, res) => {
   console.log("getting payment details");
-  console.log("req",req);
+  //console.log("req",req);
   //console.log("body", req.body);
-  //var transaction_id = req.body.id;
-  res.status(200).json(req.body);
+  var transaction_id =  req.body.id;
+  res.status(200).json(transaction_id);
   // console.log("transaction_id",transaction_id);
   // const mollieClient = createMollieClient({
   //   apiKey: "test_bv74rGDe9wC22EcHdyw3d7C9BgQtRw",
