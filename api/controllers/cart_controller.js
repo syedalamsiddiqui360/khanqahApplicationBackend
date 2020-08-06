@@ -302,6 +302,7 @@ exports.receivePaymentResponse =  (req, res) => {
   //console.log("req",req);
   //console.log("body", req.body);
   var transaction_id =  req.body.id;
+  console.log("transaction_id",transaction_id);
   res.status(200).json(transaction_id);
   // console.log("transaction_id",transaction_id);
   // const mollieClient = createMollieClient({
