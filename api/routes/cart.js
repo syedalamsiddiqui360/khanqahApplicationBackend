@@ -15,11 +15,14 @@ router.put("/update_cart_quantity", cartRequests.updateCartQuantity , CartContro
 router.delete("/delete_cart_item", cartRequests.deleteCartItem,  CartController.deleteCartItem);
 router.get("/checkout",   CartController.checkout);
 router.post("/receive-payment-response",  CartController.receivePaymentResponse);
+router.get("/complete", (req,res)=>{
+  res.status(200).json({
+    message: "Successful.",
+  });
+});
 
 
-router.post('/profile', upload.none(), async function (req, res, next) {
-    await res.send(req.body);
-  })
+
 
 
 module.exports = router;
