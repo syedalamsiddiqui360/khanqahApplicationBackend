@@ -38,10 +38,11 @@ const languageRoutes = require("./api/routes/languages");
 const cmsPageRoutes = require("./api/routes/cms_pages");
 const menuLinksRoutes = require("./api/routes/menu_links");
 const cartRoutes = require("./api/routes/cart");
+const orderRoutes = require("./api/routes/order");
 
 app.use(morgan("dev")); // it will log all the requests.
-app.use(bodyParser.json()); // it will handle request body
 app.use(bodyParser.urlencoded({ extended: false })); // it will handle request body
+app.use(bodyParser.json()); // it will handle request body
 
 //handling cors
 app.use((req, res, next) => {
@@ -64,6 +65,7 @@ app.use("/languages", languageRoutes);
 app.use("/page-content", cmsPageRoutes);
 app.use("/menu-links", menuLinksRoutes);
 app.use("/cart", cartRoutes);
+app.use("/order", orderRoutes);
 
 // //error handling
 app.use((req, res, next) => {

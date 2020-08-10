@@ -7,7 +7,7 @@ require("dotenv").config();
 //get  all users from user model
 exports.getAllUsers = async (req, res, next) => {
   try {
-    const data = await user.findAll();
+    const data = await user.findAll({ where: {deletedAt: null} });
     res.send({ data });
   } catch (e) {
     res.statusCode = 300;
@@ -26,7 +26,7 @@ exports.login = (req, res, next) => {
   const { username, password } = req.body;
 
   user
-    .findOne({ where: { username: username } })
+    .findOne({ where: { username: username, deletedAt: null } })
     .then(async function (userData) {
       if (!userData) {
         return res.status(401).json({
@@ -62,7 +62,7 @@ exports.login = (req, res, next) => {
 //to create a new user
 exports.createUser = async (req, res, next) => {
   try {
-    const { username, password } = req.body;
+    const { username, password, firstname, lastname, phone, company_name } = req.body;
     const user_agent = `${req.headers["user-agent"]} `;
     const ip = req.connection.remoteAddress;
     var device_name = "";
@@ -89,6 +89,10 @@ exports.createUser = async (req, res, next) => {
     const data = {
       username: username,
       password: encyptPassword,
+      firstname: firstname,
+      lastname: lastname,
+      phone: phone,
+      company_name: company_name
     };
     const response = await user.create(data);
     return res.status(200).json(response);
@@ -99,3 +103,47 @@ exports.createUser = async (req, res, next) => {
     });
   }
 };
+exports.getOne = async (req, res, next) => {
+  try {
+    const {id} = req.params;
+    const data = await user.findOne({where: { id: id, deletedAt: null }});
+    res.send({ data });
+  } catch (e) {
+    res.statusCode = 300;
+    res.send("Please Check log DataBase Error");
+    console.log(e);
+  }
+};
+
+exports.delete = async (req, res, next) => {
+  try {
+    const {id} = req.params;
+    const data = await user.update({deletedAt: new Date()}, { where: { id: id} });
+    res.send({ data });
+  } catch (e) {
+    res.statusCode = 300;
+    res.send("Please Check log DataBase Error");
+    console.log(e);
+  }
+};
+
+exports.update = async (req, res, next) => {
+  try {
+    const inputs = req.body;
+    const { id } = req.params;
+    inputs.updatedAt = new Date();
+    if (inputs.password !== null){
+      const encyptPassword = await bcrypt.hash(inputs.password, 10); //encrypt password using bcrypt technique
+      inputs.password = encyptPassword;
+    }else{
+      delete inputs.password;
+    }
+    const data = await user.update(inputs, { where: { id: id} });
+    res.send({ data });
+  } catch (e) {
+    res.statusCode = 300;
+    res.send("Please Check log DataBase Error");
+    console.log(e);
+  }
+};
+
