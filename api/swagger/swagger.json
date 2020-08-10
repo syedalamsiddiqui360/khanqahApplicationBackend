@@ -225,6 +225,39 @@
                 }
             }
         },
+        "/cart/checkout": {
+            "post": {
+                "tags": [
+                    "Cart"
+                ],
+                "summary": "It will give checkout URL in response",
+                "description": "",
+                "operationId": "",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Checkout Object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Checkout"
+                        }
+                    }
+                ],
+                
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
         "/languages": {
             "post": {
                 "tags": [
@@ -247,12 +280,46 @@
             }
             
         },
-        "/menu-links": {
+        "/menu-links/header_links": {
             "post": {
                 "tags": [
                     "Menu Links"
                 ],
-                "summary": "Get All Menu Links",
+                "summary": "Get All Menu Header Links",
+                "description": "",
+                "operationId": "",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Language ID",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/Language ID"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+            
+        },
+        "/menu-links/footer_links": {
+            "post": {
+                "tags": [
+                    "Menu Links"
+                ],
+                "summary": "Get All Menu Footer Links",
                 "description": "",
                 "operationId": "",
                 "consumes": [
@@ -424,6 +491,15 @@
                     "required": "true"
                 },
                 "user_id": {
+                    "type": "integer",
+                    "required": "true"
+                }
+            }
+        },
+        "Checkout": {
+            "type": "object",
+            "properties": {
+                "cart_id": {
                     "type": "integer",
                     "required": "true"
                 }
