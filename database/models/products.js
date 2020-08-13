@@ -2,6 +2,7 @@ const Sequelize = require("sequelize");
 const db = require("../connection");
 const product_files=require("./product_files");
 const product_type=require("./product_type");
+const product_meta=require("./product_meta");
 
 const products = db.define(
   "products",
@@ -34,6 +35,7 @@ const products = db.define(
     tableName: "products",
   }
 );
+products.hasMany(product_meta, { foreignKey: 'product_id' });
 products.hasMany(product_files, { foreignKey: 'product_id', as: 'product_files' });
 products.belongsTo(product_type, { foreignKey: 'product_type_id' })
 
