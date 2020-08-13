@@ -1,8 +1,7 @@
 const Sequelize = require("sequelize");
 const db = require("../connection");
-const product_content=require("./product_content");
 const product_files=require("./product_files");
-const product_meta=require("./product_meta");
+const product_type=require("./product_type");
 
 const products = db.define(
   "products",
@@ -14,6 +13,13 @@ const products = db.define(
     },
     price: {
       type: Sequelize.DOUBLE,
+    },
+    product_type_id: {
+      type: Sequelize.BIGINT(11),
+      references: {
+        model: "product_type", //  refers to table name
+        key: "id", //  refers to column name in reference table
+      },
     },
   },
   
@@ -28,6 +34,7 @@ const products = db.define(
     tableName: "products",
   }
 );
-products.hasMany(product_content, { foreignKey: 'product_id'});
 products.hasMany(product_files, { foreignKey: 'product_id', as: 'product_files' });
+products.belongsTo(product_type, { foreignKey: 'product_type_id' })
+
 module.exports = products;

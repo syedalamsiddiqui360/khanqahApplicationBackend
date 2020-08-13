@@ -1,5 +1,4 @@
 const products = require("../../database/models/products");
-const product_content = require("../../database/models/product_content");
 const product_meta = require("../../database/models/product_meta");
 const sequelize = require("../../database/connection");
 
@@ -10,10 +9,10 @@ exports.getAll = async (req, res, next) => {
     const data = await products.findAll({
       include: [
         {
-          model: product_content,
+          model: product_meta,
           where: { language_id: language_id },
         },
-        "product_files",
+        "product_files","product_type"
       ],
     });
     res.send({ data });
@@ -33,10 +32,10 @@ exports.getById = async (req, res, next) => {
         where: { id: req.params.id },
         include: [
           {
-            model: product_content,
+            model: product_meta,
             where: { language_id: language_id },
           },
-          "product_files",
+          "product_files","product_type"
         ],
       })
       .then(async function (response) {

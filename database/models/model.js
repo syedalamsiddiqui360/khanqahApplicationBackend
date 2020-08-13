@@ -8,7 +8,6 @@ const page_files = require('./page_files');
 const keywords = require('./keywords');
 const products = require('./products');
 const product_meta = require('./product_meta');
-const product_content = require('./product_content');
 const product_type = require('./product_type');
 const product_files = require('./product_files');
 const cart = require('./cart');
@@ -16,6 +15,7 @@ const orders = require('./orders');
 const transactions = require('./transactions');
 const menu_links = require('./menu_links');
 const menu_link_content = require('./menu_link_content');
+const banners = require('./banners');
 
 
 
@@ -29,7 +29,6 @@ module.exports = {
   keywords, 
   products, 
   product_meta, 
-  product_content, 
   product_type, 
   product_files, 
   cart, 
@@ -37,4 +36,5 @@ module.exports = {
   transactions, 
   menu_links, 
   menu_link_content, 
+  banners, 
 }

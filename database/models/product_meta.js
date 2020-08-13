@@ -9,6 +9,19 @@ const product_meta = db.define(
       autoIncrement: true,
       primaryKey: true,
     },
+    title: {
+      type: Sequelize.STRING(255),
+    },
+    content: {
+      type: Sequelize.STRING(1500),
+    },
+    language_id: {
+      type: Sequelize.BIGINT(11),
+      references: {
+        model: "languages", //  refers to table name
+        key: "id", //  refers to column name in reference table
+      },
+    },
     product_id: {
       type: Sequelize.BIGINT(11),
       references: {
@@ -16,8 +29,13 @@ const product_meta = db.define(
         key: "id", //  refers to column name in reference table
       },
     },
-    title: {
+    value: {
       type: Sequelize.STRING(255),
+      allowNull: true,
+    },
+    value_date: {
+      type: Sequelize.DATE,
+      allowNull: true,
     },
   },
   {

@@ -1,19 +1,37 @@
 const Sequelize = require("sequelize");
 const db = require("../connection");
 
-const product_type = db.define(
-  "product_type",
+
+const banners = db.define(
+  "banners",
   {
     id: {
       type: Sequelize.BIGINT(11),
       autoIncrement: true,
       primaryKey: true,
     },
-    name: {
+    image: {
       type: Sequelize.STRING(255),
     },
+    button_text: {
+      type: Sequelize.STRING(255),
+    },
+    button_link: {
+      type: Sequelize.STRING(255),
+    },
+    display_order: {
+      type: Sequelize.INTEGER,
+    },
+    menu_link_id: {
+      type: Sequelize.BIGINT(11),
+      references: {
+        model: "menu_links", //  refers to table name
+        key: "id", //  refers to column name in reference table
+      },
+    }
+    
+    
   },
-
   {
     paranoid: true,
     timestamps: true,
@@ -22,8 +40,7 @@ const product_type = db.define(
     // if you don't want that, set the following
     freezeTableName: true,
     // define the table's name
-    tableName: "product_type",
+    tableName: "banners",
   }
 );
-
-module.exports = product_type;
+module.exports = banners;
