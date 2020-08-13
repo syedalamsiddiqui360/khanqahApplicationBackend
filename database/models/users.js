@@ -25,12 +25,15 @@ const user = db.define(
     },
     email: {
       type: Sequelize.STRING(70),
+      unique: true,
       validate: {
         isEmail: true, // checks for email format (foo@bar.com)
       },
     },
     username: {
       type: Sequelize.STRING(70),
+      unique: true,
+      
     },
     password: {
       type: Sequelize.STRING(255),

@@ -30,5 +30,4 @@ const products = db.define(
 );
 products.hasMany(product_content, { foreignKey: 'product_id'});
 products.hasMany(product_files, { foreignKey: 'product_id', as: 'product_files' });
-products.hasMany(product_meta, { foreignKey: 'product_id', as: 'product_meta' });
 module.exports = products;

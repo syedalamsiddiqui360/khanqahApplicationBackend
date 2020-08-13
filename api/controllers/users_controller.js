@@ -61,8 +61,15 @@ exports.login = (req, res, next) => {
 
 //to create a new user
 exports.createUser = async (req, res, next) => {
+  
   try {
-    const { username, password, firstname, lastname, phone, company_name } = req.body;
+    const errors = validationResult(req); //if errors from user_request.js
+    if (!errors.isEmpty()) {
+      res.status(422).json({ errors: errors.array() });
+      return;
+    }
+    
+    const { username, password } = req.body;
     const user_agent = `${req.headers["user-agent"]} `;
     const ip = req.connection.remoteAddress;
     var device_name = "";
@@ -97,6 +104,7 @@ exports.createUser = async (req, res, next) => {
     const response = await user.create(data);
     return res.status(200).json(response);
   } catch (ex) {
+    console.log("error creating user",ex);
     return res.status(401).json({
       message: "Error creating User",
       error: ex,
