@@ -7,8 +7,8 @@
     "host": "backend.develop.pdt.agifly.cloud",
     "basePath": "/",
     "schemes": [
-        "http",
-        "https"
+        "https",
+        "http"
     ],
     "securityDefinitions": {
         "api_key": {
@@ -51,7 +51,7 @@
                 }
             }
         },
-        "/products/{productID}": {
+        "/products/show/{productID}": {
             "post": {
                 "tags": [
                     "Products"
@@ -85,6 +85,29 @@
                         }
                     }
                 ],
+                
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/products/filters_list": {
+            "post": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Get Filters List Of Products",
+                "description": "",
+                "operationId": "",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                
                 
                 "responses": {
                     "default": {

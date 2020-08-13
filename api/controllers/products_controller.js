@@ -1,36 +1,46 @@
 const products = require("../../database/models/products");
 const product_content = require("../../database/models/product_content");
 const product_meta = require("../../database/models/product_meta");
+const sequelize = require("../../database/connection");
 
 exports.getAll = async (req, res, next) => {
-  var language_id=req.body.language_id?req.body.language_id:1;
+  var language_id = req.body.language_id ? req.body.language_id : 1;
   //console.log("language_id: "+language_id);
   try {
     const data = await products.findAll({
-      include: [{
-        model: product_content,
-        where: {language_id:language_id }
-       }, "product_files", "product_meta"],
+      include: [
+        {
+          model: product_content,
+          where: { language_id: language_id },
+        },
+        "product_files",
+      ],
     });
     res.send({ data });
   } catch (e) {
+    console.log(e);
     res.statusCode = 300;
     res.send("Please Check log DataBase Error");
-    console.log(e);
   }
 };
 
 exports.getById = async (req, res, next) => {
   try {
-    var language_id=req.body.language_id?req.body.language_id:1;
+    var language_id = req.body.language_id ? req.body.language_id : 1;
     const data = {};
     products
-      .findOne({ where: { id: req.params.id },include: [{
-        model: product_content,
-        where: {language_id:language_id }
-       }, "product_files", "product_meta"], })
-      .then(async function (data) {
-        res.send({ data });
+      .findOne({
+        where: { id: req.params.id },
+        include: [
+          {
+            model: product_content,
+            where: { language_id: language_id },
+          },
+          "product_files",
+        ],
+      })
+      .then(async function (response) {
+        res.send({ response });
       })
       .error(function (error) {});
   } catch (e) {
@@ -40,45 +50,29 @@ exports.getById = async (req, res, next) => {
   }
 };
 
-exports.create = async (req, res, next) => {
+exports.getFilters = async (req, res, next) => {
+  console.log("GET FILTERS PAGE");
+  
   try {
-    const data = req.body;
-    const product = await products.create(data,{
-      include: [ "product_contents", "product_files", "product_meta" ]
+    var language_id = req.body.language_id ? req.body.language_id : 1;
+    const data = {};
+    var query=`SELECT DISTINCT(title) FROM product_meta ORDER BY title`;
+    
+    
+    await sequelize
+    .query(query, { type: sequelize.QueryTypes.SELECT })
+    .then(function (records) {
+      console.log("records",records);
+      //res.statusCode = 200;
+      data.records=records;
+      return res.send(data.records);
+    })
+    .catch((err) => {
+      console.log("ERROR IN FETCHING DATA",err);
     });
-    res.send(product);
   } catch (e) {
+    console.log(e);
     res.statusCode = 300;
     res.send("Please Check log DataBase Error");
-    console.log(e);
-  }
-};
-exports.update = async (req, res, next) => {
-  try {
-    const inputs = req.body;
-    const { id } = req.params;
-    inputs.updatedAt = new Date();
-    const updated = await products.update(inputs, { where: { id: id }});
-    inputs.product_contents[0].updatedAt = new Date();
-    inputs.product_meta[0].updatedAt = new Date();
-    await product_content.update(inputs.product_contents[0], { where: { id: inputs.product_contents[0].id }});
-    await product_meta.update(inputs.product_meta[0], { where: { id: inputs.product_meta[0].id }});
-    res.send(updated);
-  } catch (e) {
-    res.statusCode = 300;
-    res.send("Please Check log DataBase Error");
-    console.log(e);
-  }
-};
-
-exports.delete = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const product = await products.update({ deletedAt: new Date() },{ where: { id: id} });
-    res.send(product);
-  } catch (e) {
-    res.statusCode = 300;
-    res.send("Please Check log DataBase Error");
-    console.log(e);
   }
 };
