@@ -16,6 +16,9 @@ const transactions = require('./transactions');
 const menu_links = require('./menu_links');
 const menu_link_content = require('./menu_link_content');
 const banners = require('./banners');
+const banner_content = require('./banner_content');
+const banner_meta = require('./banner_meta');
+const banner_meta_content = require('./banner_meta_content');
 
 
 
@@ -29,7 +32,7 @@ module.exports = {
   keywords, 
   products, 
   product_meta, 
-  product_type, 
+  product_type,  
   product_files, 
   cart, 
   orders, 
@@ -37,4 +40,7 @@ module.exports = {
   menu_links, 
   menu_link_content, 
   banners, 
+  banner_content, 
+  banner_meta, 
+  banner_meta_content 
 }
