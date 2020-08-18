@@ -1,37 +1,28 @@
 const Sequelize = require("sequelize");
 const db = require("../connection");
-const  banner_meta = require("./banner_meta");
 
-
-const banners = db.define(
-  "banners",
+const banner_meta = db.define(
+  "banner_meta",
   {
     id: {
       type: Sequelize.BIGINT(11),
       autoIncrement: true,
       primaryKey: true,
     },
-    image: {
-      type: Sequelize.STRING(255),
-    },
-    button_text: {
-      type: Sequelize.STRING(255),
-    },
-    button_link: {
-      type: Sequelize.STRING(255),
-    },
-    display_order: {
-      type: Sequelize.INTEGER,
-    },
-    menu_link_id: {
+    banner_id: {
       type: Sequelize.BIGINT(11),
       references: {
-        model: "menu_links", //  refers to table name
+        model: "banners", //  refers to table name
         key: "id", //  refers to column name in reference table
       },
-    }
-    
-    
+    },
+    link: {
+      type: Sequelize.STRING(255),
+    },
+    parent: {
+      type: Sequelize.STRING(255),
+      allowNull: true,
+    },
   },
   {
     paranoid: true,
@@ -41,9 +32,7 @@ const banners = db.define(
     // if you don't want that, set the following
     freezeTableName: true,
     // define the table's name
-    tableName: "banners",
+    tableName: "banner_meta",
   }
 );
-
-banners.hasMany(banner_meta, { foreignKey: 'banner_id'});
-module.exports = banners;
+module.exports = banner_meta;

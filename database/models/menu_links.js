@@ -1,6 +1,7 @@
 const Sequelize = require("sequelize");
 const db = require("../connection");
 const  menu_link_content = require("./menu_link_content");
+const  banners = require("./banners");
 
 const menu_links = db.define(
   "menu_links",
@@ -42,4 +43,5 @@ const menu_links = db.define(
   }
 );
 menu_links.hasMany(menu_link_content, { foreignKey: 'menu_link_id'});
+menu_links.hasMany(banners, { foreignKey: 'menu_link_id'});
 module.exports = menu_links;
