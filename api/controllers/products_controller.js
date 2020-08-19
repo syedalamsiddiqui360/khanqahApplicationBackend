@@ -22,20 +22,34 @@ exports.getAll = async (req, res, next) => {
     res.send("Please Check log DataBase Error");
   }
 };
+exports.get = async (req, res, next) => {
+  try {
+    const data = await products.findAll({
+      include: [
+        "product_files","product_type", "product_meta"
+      ],
+    });
+    res.send({ data });
+  } catch (e) {
+    console.log(e);
+    res.statusCode = 300;
+    res.send("Please Check log DataBase Error");
+  }
+};
 
 exports.getById = async (req, res, next) => {
   try {
-    var language_id = req.body.language_id ? req.body.language_id : 1;
+    //var language_id = req.body.language_id ? req.body.language_id : 1;
     const data = {};
     products
       .findOne({
         where: { id: req.params.id },
         include: [
-          {
+          /*{
             model: product_meta,
             where: { language_id: language_id },
-          },
-          "product_files","product_type"
+          },*/
+          "product_files","product_type",product_meta
         ],
       })
       .then(async function (response) {
@@ -73,5 +87,47 @@ exports.getFilters = async (req, res, next) => {
     console.log(e);
     res.statusCode = 300;
     res.send("Please Check log DataBase Error");
+  }
+};
+
+exports.create = async (req, res, next) => {
+  try {
+    const data = req.body;
+    const product = await products.create(data,{
+      include: ["product_files", "product_meta" ]
+    });
+    res.send(product);
+  } catch (e) {
+    res.statusCode = 300;
+    res.send("Please Check log DataBase Error");
+    console.log(e);
+  }
+};
+exports.update = async (req, res, next) => {
+  try {
+    const inputs = req.body;
+    const { id } = req.params;
+    inputs.updatedAt = new Date();
+    const updated = await products.update(inputs, { where: { id: id }});
+    inputs.product_meta.map((meta)=>{
+      product_meta.update(meta, { where: { id: meta.id }});
+    });
+    res.send(updated);
+  } catch (e) {
+    res.statusCode = 300;
+    res.send("Please Check log DataBase Error");
+    console.log(e);
+  }
+};
+
+exports.delete = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const product = await products.update({ deletedAt: new Date() },{ where: { id: id} });
+    res.send(product);
+  } catch (e) {
+    res.statusCode = 300;
+    res.send("Please Check log DataBase Error");
+    console.log(e);
   }
 };
