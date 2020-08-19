@@ -1,6 +1,6 @@
 const Sequelize = require("sequelize");
 const db = require("../connection");
-
+const cart=require("./cart");
 const orders = db.define(
   "orders",
   {
@@ -13,13 +13,6 @@ const orders = db.define(
       type: Sequelize.BIGINT(11),
       references: {
         model: "users", //  refers to table name
-        key: "id", //  refers to column name in reference table
-      },
-    },
-    product_id: {
-      type: Sequelize.BIGINT(11),
-      references: {
-        model: "products", //  refers to table name
         key: "id", //  refers to column name in reference table
       },
     },
@@ -51,5 +44,4 @@ const orders = db.define(
     tableName: "orders",
   }
 );
-
 module.exports = orders;
