@@ -17,6 +17,13 @@ const user = db.define(
         key: "id", //  refers to column name in reference table
       },
     },
+    user_type_id: {
+      type: Sequelize.BIGINT(11),
+      references: {
+        model: "user_type", //  refers to table name
+        key: "id", //  refers to column name in reference table
+      },
+    },
     firstname: {
       type: Sequelize.STRING(255),
     },

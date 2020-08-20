@@ -9,13 +9,6 @@ const user_type = db.define(
       autoIncrement: true,
       primaryKey: true,
     },
-    user_id: {
-      type: Sequelize.BIGINT(11),
-      references: {
-        model: "users", //  refers to table name
-        key: "id", //  refers to column name in reference table
-      },
-    },
     title: {
       type: Sequelize.STRING(255),
     },

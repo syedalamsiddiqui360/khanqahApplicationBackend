@@ -1,4 +1,5 @@
 const user = require("../../database/models/users");
+const user_type = require("../../database/models/user_type");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { validationResult } = require("express-validator");
@@ -13,6 +14,18 @@ exports.getAllUsers = async (req, res, next) => {
     res.statusCode = 300;
     res.send("Please Check log DataBase Error");
     console.log(e);
+  }
+};
+
+
+exports.getAllUsersTypes = async (req, res, next) => {
+  try {
+    const data = await user_type.findAll({ where: {deletedAt: null} });
+    res.send({ data });
+  } catch (e) {
+    console.log(e);
+    res.statusCode = 300;
+    res.send("Please Check log DataBase Error");
   }
 };
 
@@ -69,7 +82,7 @@ exports.createUser = async (req, res, next) => {
       return;
     }
     
-    const { first_name, last_name, email,password, phone, company_name } = req.body;
+    const { first_name, last_name, email, phone, company_name , user_type_id } = req.body;
     const user_agent = `${req.headers["user-agent"]} `;
     const ip = req.connection.remoteAddress;
     var device_name = "";
@@ -91,11 +104,13 @@ exports.createUser = async (req, res, next) => {
     //     type: user_agent + "|" + ip,
     //     device_name: device_name,
     //   };
-
+    var password="pdt1234";
     const encyptPassword = await bcrypt.hash(password, 10); //encrypt password using bcrypt technique
     const data = {
       //username: username,
+      user_type_id: user_type_id,
       password: encyptPassword,
+      email: email,
       firstname: first_name,
       lastname: last_name,
       phone: phone,
