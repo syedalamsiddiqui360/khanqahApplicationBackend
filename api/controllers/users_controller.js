@@ -69,11 +69,11 @@ exports.createUser = async (req, res, next) => {
       return;
     }
     
-    const { username, password } = req.body;
+    const { first_name, last_name, email,password, phone, company_name } = req.body;
     const user_agent = `${req.headers["user-agent"]} `;
     const ip = req.connection.remoteAddress;
     var device_name = "";
-    console.log("here");
+    //console.log("here");
     // var OsName = parser(user_agent).os.name;
     // if (OsName === "iOS" || OsName === "Android") {
     //   device_name = OsName;
@@ -94,10 +94,10 @@ exports.createUser = async (req, res, next) => {
 
     const encyptPassword = await bcrypt.hash(password, 10); //encrypt password using bcrypt technique
     const data = {
-      username: username,
+      //username: username,
       password: encyptPassword,
-      firstname: firstname,
-      lastname: lastname,
+      firstname: first_name,
+      lastname: last_name,
       phone: phone,
       company_name: company_name
     };
