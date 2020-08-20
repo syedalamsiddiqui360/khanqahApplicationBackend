@@ -4,7 +4,7 @@
         "title": "Swagger for PDT",
         "version": "1.0.0"
     },
-    "host": "https://backend.develop.pdt.agifly.cloud",
+    "host": "backend.develop.pdt.agifly.cloud",
     "basePath": "/",
     "schemes": [
         "https",
