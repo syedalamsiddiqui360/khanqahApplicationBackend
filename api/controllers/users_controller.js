@@ -36,14 +36,14 @@ exports.login = (req, res, next) => {
     res.status(422).json({ errors: errors.array() });
     return;
   }
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
   user
-    .findOne({ where: { username: username, deletedAt: null } })
+    .findOne({ where: { email: email, deletedAt: null } })
     .then(async function (userData) {
       if (!userData) {
         return res.status(401).json({
-          message: "Incorrect Username",
+          message: "Incorrect email",
         });
       } else {
         resoponse_compare = await bcrypt.compare(password, userData.password);

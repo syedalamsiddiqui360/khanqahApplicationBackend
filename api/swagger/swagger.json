@@ -357,6 +357,32 @@
         }
       }
     },
+    "/user/login": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Login User",
+        "description": "",
+        "operationId": "",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User Login Params",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/User-Login"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
     "/user/types": {
       "post": {
         "tags": ["User"],
@@ -477,6 +503,19 @@
           "required": "true"
         },
         "company_name": {
+          "type": "string",
+          "required": "true"
+        }
+      }
+    },
+    "User-Login": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "required": "true"
+        },
+        "password": {
           "type": "string",
           "required": "true"
         }
