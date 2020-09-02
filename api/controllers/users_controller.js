@@ -8,7 +8,7 @@ require("dotenv").config();
 //get  all users from user model
 exports.getAllUsers = async (req, res, next) => {
   try {
-    const data = await user.findAll({ where: {deletedAt: null} });
+    const data = await user.findAll({ where: { deletedAt: null } });
     res.send({ data });
   } catch (e) {
     res.statusCode = 300;
@@ -17,10 +17,9 @@ exports.getAllUsers = async (req, res, next) => {
   }
 };
 
-
 exports.getAllUsersTypes = async (req, res, next) => {
   try {
-    const data = await user_type.findAll({ where: {deletedAt: null} });
+    const data = await user_type.findAll({ where: { deletedAt: null } });
     res.send({ data });
   } catch (e) {
     console.log(e);
@@ -74,15 +73,21 @@ exports.login = (req, res, next) => {
 
 //to create a new user
 exports.createUser = async (req, res, next) => {
-  
   try {
     const errors = validationResult(req); //if errors from user_request.js
     if (!errors.isEmpty()) {
       res.status(422).json({ errors: errors.array() });
       return;
     }
-    
-    const { first_name, last_name, email, phone, company_name , user_type_id } = req.body;
+
+    const {
+      first_name,
+      last_name,
+      email,
+      phone,
+      company_name,
+      user_type_id,
+    } = req.body;
     const user_agent = `${req.headers["user-agent"]} `;
     const ip = req.connection.remoteAddress;
     var device_name = "";
@@ -104,7 +109,7 @@ exports.createUser = async (req, res, next) => {
     //     type: user_agent + "|" + ip,
     //     device_name: device_name,
     //   };
-    var password="pdt1234";
+    var password = "pdt1234";
     const encyptPassword = await bcrypt.hash(password, 10); //encrypt password using bcrypt technique
     const data = {
       //username: username,
@@ -114,12 +119,26 @@ exports.createUser = async (req, res, next) => {
       firstname: first_name,
       lastname: last_name,
       phone: phone,
-      company_name: company_name
+      company_name: company_name,
     };
-    const response = await user.create(data);
-    return res.status(200).json(response);
+    const userData = await user.create(data);
+    //create user and also assign him token
+    const token = jwt.sign(
+      {
+        id: userData.id,
+      },
+      process.env.SECRET, //env secret is picked from env file
+      {
+        expiresIn: "24h",
+      }
+    );
+    return res.status(200).json({
+      message: "logged in successfully",
+      user: userData,
+      token: token,
+    });
   } catch (ex) {
-    console.log("error creating user",ex);
+    console.log("error creating user", ex);
     return res.status(401).json({
       message: "Error creating User",
       error: ex,
@@ -128,8 +147,8 @@ exports.createUser = async (req, res, next) => {
 };
 exports.getOne = async (req, res, next) => {
   try {
-    const {id} = req.params;
-    const data = await user.findOne({where: { id: id, deletedAt: null }});
+    const { id } = req.params;
+    const data = await user.findOne({ where: { id: id, deletedAt: null } });
     res.send({ data });
   } catch (e) {
     res.statusCode = 300;
@@ -140,8 +159,11 @@ exports.getOne = async (req, res, next) => {
 
 exports.delete = async (req, res, next) => {
   try {
-    const {id} = req.params;
-    const data = await user.update({deletedAt: new Date()}, { where: { id: id} });
+    const { id } = req.params;
+    const data = await user.update(
+      { deletedAt: new Date() },
+      { where: { id: id } }
+    );
     res.send({ data });
   } catch (e) {
     res.statusCode = 300;
@@ -155,13 +177,13 @@ exports.update = async (req, res, next) => {
     const inputs = req.body;
     const { id } = req.params;
     inputs.updatedAt = new Date();
-    if (inputs.password !== null){
+    if (inputs.password !== null) {
       const encyptPassword = await bcrypt.hash(inputs.password, 10); //encrypt password using bcrypt technique
       inputs.password = encyptPassword;
-    }else{
+    } else {
       delete inputs.password;
     }
-    const data = await user.update(inputs, { where: { id: id} });
+    const data = await user.update(inputs, { where: { id: id } });
     res.send({ data });
   } catch (e) {
     res.statusCode = 300;
@@ -169,4 +191,3 @@ exports.update = async (req, res, next) => {
     console.log(e);
   }
 };
-

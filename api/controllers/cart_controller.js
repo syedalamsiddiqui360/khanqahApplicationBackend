@@ -9,6 +9,11 @@ const { response } = require("express");
 
 //Get Cart by ID
 exports.getCartByID = async (req, res, next) => {
+  const errors = validationResult(req); //if errors from user_request.js
+  if (!errors.isEmpty()) {
+    res.status(422).json({ errors: errors.array() });
+    return;
+  }
   try {
     const { user_id, cart_id } = req.body;
     var cart_response = await cart.findOne({
@@ -35,6 +40,11 @@ exports.getCartByID = async (req, res, next) => {
 
 //add new item to cart
 exports.addToCart = async (req, res, next) => {
+  const errors = validationResult(req); //if errors from user_request.js
+  if (!errors.isEmpty()) {
+    res.status(422).json({ errors: errors.array() });
+    return;
+  }
   try {
     const { product_id, user_id } = req.body;
     var quantity = req.body.quantity ? req.body.quantity : 1;
@@ -47,11 +57,10 @@ exports.addToCart = async (req, res, next) => {
         message: "Invalid product ID",
       });
     }
+    //End Check if product exist in databse
     console.log("calculated_price", parseFloat(product_response.price));
     var product_price = parseFloat(product_response.price);
-    //End Check if product exist in databse
     const data = {
-      product_id: product_id,
       price: null,
       user_id: user_id,
       quantity: null,
@@ -265,7 +274,7 @@ exports.checkout = async (req, res) => {
       message: "Invalid Cart ID",
     });
   }
-  console.log("cart_response",cart_response.price);
+  console.log("cart_response", cart_response.price);
 
   mollieClient.payments
     .create({
@@ -273,14 +282,14 @@ exports.checkout = async (req, res) => {
         value: cart_response.price.toFixed(2),
         currency: "EUR",
       },
-      description: "Order #"+cart_id,
+      description: "Order #" + cart_id,
       method: "creditcard",
-      redirectUrl:
-        "https://backend.develop.pdt.agifly.cloud/cart/complete",
-      webhookUrl: 'https://backend.develop.pdt.agifly.cloud/cart/receive-payment-response',
+      redirectUrl: "https://backend.develop.pdt.agifly.cloud/cart/complete",
+      webhookUrl:
+        "https://backend.develop.pdt.agifly.cloud/cart/receive-payment-response",
       //webhookUrl: "https://pdt.requestcatcher.com/",
       metadata: {
-        order_id: "Order #"+cart_id,
+        order_id: "Order #" + cart_id,
       },
     })
     .then((payment) => {
@@ -298,14 +307,14 @@ exports.checkout = async (req, res) => {
     });
 };
 
-exports.receivePaymentResponse =  (req, res) => {
+exports.receivePaymentResponse = (req, res) => {
   console.log("getting payment details");
   //console.log("req",req);
   //console.log("body", req.body);
-  var transaction_id =  req.body.id;
-  console.log("transaction_id",transaction_id);
+  var transaction_id = req.body.id;
+  console.log("transaction_id", transaction_id);
   //res.status(200).json(transaction_id);
-  console.log("transaction_id",transaction_id);
+  console.log("transaction_id", transaction_id);
   const mollieClient = createMollieClient({
     apiKey: "test_bv74rGDe9wC22EcHdyw3d7C9BgQtRw",
   });

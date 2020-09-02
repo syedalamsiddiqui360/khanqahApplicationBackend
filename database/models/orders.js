@@ -16,6 +16,13 @@ const orders = db.define(
         key: "id", //  refers to column name in reference table
       },
     },
+    product_id: {
+      type: Sequelize.BIGINT(11),
+      references: {
+        model: "products", //  refers to table name
+        key: "id", //  refers to column name in reference table
+      },
+    },
     quantity: {
       type: Sequelize.DOUBLE,
     },
