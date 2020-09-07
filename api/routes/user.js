@@ -8,7 +8,7 @@ const userRequests = require("../requests/user_requests");
 
 
 //checkAuth IS ASSIGNED TO THE ROUTE AS MIDDLEWARE BECAUSE ITS A PROTECTED ROUTE AND MUST PASS TOKEN VERIFICATION
-router.post("/",   checkAuth, UsersController.getAllUsers);
+router.post("/all_users",    UsersController.getAllUsers);
 
 //checkAuth IS ASSIGNED TO THE ROUTE AS MIDDLEWARE BECAUSE ITS A PROTECTED ROUTE AND MUST PASS TOKEN VERIFICATION
 router.get("/show/:id",   checkAuth, UsersController.getOne);

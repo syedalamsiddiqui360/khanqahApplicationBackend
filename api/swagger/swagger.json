@@ -357,6 +357,24 @@
         }
       }
     },
+    "/user/all_users": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Get All Users",
+        "description": "",
+        "operationId": "",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
     "/user/login": {
       "post": {
         "tags": ["User"],
