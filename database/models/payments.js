@@ -44,8 +44,8 @@ const payments = db.define(
     // if you don't want that, set the following
     freezeTableName: true,
     // define the table's name
-    tableName: "orders",
+    tableName: "payments",
   }
 );
 
-module.exports = orders;
+module.exports = payments;

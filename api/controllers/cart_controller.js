@@ -354,7 +354,7 @@ exports.receivePaymentResponse = (req, res) => {
 
   mollieClient.payments
     .get(transaction_id)
-    .then((payment_response) => {
+    .then(async (payment_response) => {
       console.log("transaction details", payment_response);
       var payment_data={
         'cart_id' : 1,
