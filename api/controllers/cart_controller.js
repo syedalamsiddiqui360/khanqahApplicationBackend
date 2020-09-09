@@ -321,6 +321,7 @@ exports.checkout = async (req, res) => {
       //webhookUrl: "https://pdt.requestcatcher.com/",
       metadata: {
         order_id: "Order #" + cart_id,
+        cart_id: cart_id,
       },
     })
     .then((payment) => {
@@ -343,6 +344,9 @@ exports.receivePaymentResponse = (req, res) => {
   //console.log("req",req);
   //console.log("body", req.body);
    var transaction_id = req.body.id;
+
+   //return res.send(transaction_id);
+   //return;
   // var amount = req.body.amount.value;
   // var status = req.body.status;
   // console.log("transaction_id", transaction_id);
@@ -357,10 +361,11 @@ exports.receivePaymentResponse = (req, res) => {
     .then(async (payment_response) => {
       console.log("transaction details", payment_response);
       var payment_data={
-        'cart_id' : 1,
-        'transaciton_id' : payment_response.id,
+        'cart_id' : payment_response.metadata.cart_id,
+        'transaction_id' : transaction_id,
         'amount' : payment_response.amount.value,
         'status' : payment_response.status,
+        'card' : payment_response.details.cardNumber,
       };
       console.log("payment data before creating model entry: ",payment_data);
       payment_model_response = await payments.create(payment_data);
