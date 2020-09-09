@@ -10,9 +10,7 @@ const { response } = require("express");
 
 //Get All Carts
 exports.getAllCarts = async (req, res, next) => {
-  
   try {
-    
     var cart_response = await cart.findAll();
 
     return res.status(200).json(cart_response);
@@ -291,15 +289,14 @@ exports.checkout = async (req, res) => {
   var cart_id = req.body.cart_id;
   //var cart_id = 12;
   cart_response = await cart.findOne({
-                  include: ["orders"],
-                  where: [
-                    {
-                      id: cart_id,
-                    }
-                    
-                  ],
-                });
-  
+    include: ["orders"],
+    where: [
+      {
+        id: cart_id,
+      },
+    ],
+  });
+
   if (!cart_response) {
     return res.status(422).json({
       message: "Invalid Cart ID",
@@ -343,15 +340,15 @@ exports.receivePaymentResponse = (req, res) => {
   console.log("getting payment details");
   //console.log("req",req);
   //console.log("body", req.body);
-   var transaction_id = req.body.id;
+  var transaction_id = req.body.id;
 
-   //return res.send(transaction_id);
-   //return;
+  //return res.send(transaction_id);
+  //return;
   // var amount = req.body.amount.value;
   // var status = req.body.status;
   // console.log("transaction_id", transaction_id);
   //res.status(200).json(transaction_id);
-  
+
   const mollieClient = createMollieClient({
     apiKey: "test_bv74rGDe9wC22EcHdyw3d7C9BgQtRw",
   });
@@ -359,17 +356,20 @@ exports.receivePaymentResponse = (req, res) => {
   mollieClient.payments
     .get(transaction_id)
     .then(async (payment_response) => {
-      console.log("transaction details", payment_response);
-      var payment_data={
-        'cart_id' : payment_response.metadata.cart_id,
-        'transaction_id' : transaction_id,
-        'amount' : payment_response.amount.value,
-        'status' : payment_response.status,
-        'card' : payment_response.details.cardNumber,
+      //console.log("transaction details", payment_response);
+      var payment_data = {
+        cart_id: payment_response.metadata.cart_id,
+        transaction_id: transaction_id,
+        amount: payment_response.amount.value,
+        status: payment_response.status,
+        card: payment_response.details.cardNumber,
       };
-      console.log("payment data before creating model entry: ",payment_data);
+      //console.log("payment data before creating model entry: ",payment_data);
       payment_model_response = await payments.create(payment_data);
-      res.status(200).json(payment_response);
+      //res.redirect('localhost:3000/cart' );
+      res.status(301).redirect("http://localhost:3000/complete");
+      //window.location.href=""
+      //res.status(200).json(payment_response);
     })
     .catch((error) => {
       console.log(error);
