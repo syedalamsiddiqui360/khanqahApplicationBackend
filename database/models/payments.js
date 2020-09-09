@@ -29,6 +29,9 @@ const payments = db.define(
     transaction_id: {
         type: Sequelize.STRING,
       },
+    card: {
+        type: Sequelize.STRING,
+      },
     status: {
       type: Sequelize.STRING(255),
     },

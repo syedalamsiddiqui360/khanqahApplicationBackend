@@ -1,6 +1,7 @@
 const sequelize = require("sequelize");
 const cart = require("../../database/models/cart");
 const orders = require("../../database/models/orders");
+const payments = require("../../database/models/payments");
 const products = require("../../database/models/products");
 const { validationResult } = require("express-validator");
 const { createMollieClient } = require("@mollie/api-client");
@@ -341,19 +342,29 @@ exports.receivePaymentResponse = (req, res) => {
   console.log("getting payment details");
   //console.log("req",req);
   //console.log("body", req.body);
-  var transaction_id = req.body.id;
-  console.log("transaction_id", transaction_id);
+  // var transaction_id = req.body.id;
+  // var amount = req.body.amount.value;
+  // var status = req.body.status;
+  // console.log("transaction_id", transaction_id);
   //res.status(200).json(transaction_id);
-  console.log("transaction_id", transaction_id);
+  
   const mollieClient = createMollieClient({
     apiKey: "test_bv74rGDe9wC22EcHdyw3d7C9BgQtRw",
   });
 
   mollieClient.payments
     .get(transaction_id)
-    .then((payment) => {
-      console.log("transaction details", payment);
-      res.status(200).json(payment);
+    .then((payment_response) => {
+      console.log("transaction details", payment_response);
+      var payment_data={
+        'cart_id' : 1,
+        'transaciton_id' : payment_response.id,
+        'amount' : payment_response.amount.value,
+        'status' : payment_response.status,
+      };
+      console.log("payment data before creating model entry: ",payment_data);
+      payment_model_response = await payments.create(payment_data);
+      res.status(200).json(payment_response);
     })
     .catch((error) => {
       console.log(error);

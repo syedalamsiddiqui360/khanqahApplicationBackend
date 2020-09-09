@@ -19,6 +19,7 @@ const banners = require('./banners');
 const banner_content = require('./banner_content');
 const banner_meta = require('./banner_meta');
 const banner_meta_content = require('./banner_meta_content');
+const payments = require('./payments');
 
 
 
@@ -42,5 +43,6 @@ module.exports = {
   banners, 
   banner_content, 
   banner_meta, 
-  banner_meta_content 
+  banner_meta_content, 
+  payments, 
 }
