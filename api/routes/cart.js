@@ -5,6 +5,7 @@ const cartRequests = require("../requests/cart_request");
 
 const CartController = require("../controllers/cart_controller");
 
+router.post("/get_all_carts",   CartController.getAllCarts);
 router.post("/get_cart_items",   CartController.getCartByID);
 router.post("/add_to_cart", cartRequests.addToCart,  CartController.addToCart);
 router.put("/update_cart_quantity", cartRequests.updateCartQuantity , CartController.updateCartQuantity);

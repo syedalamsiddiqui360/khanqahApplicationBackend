@@ -7,6 +7,22 @@ const { createMollieClient } = require("@mollie/api-client");
 
 const { response } = require("express");
 
+//Get All Carts
+exports.getAllCarts = async (req, res, next) => {
+  
+  try {
+    
+    var cart_response = await cart.findAll();
+
+    return res.status(200).json(cart_response);
+  } catch (e) {
+    console.log(e);
+    return res.status(401).json({
+      message: "Error Adding items to cart",
+      error: e,
+    });
+  }
+};
 //Get Cart by ID
 exports.getCartByID = async (req, res, next) => {
   const errors = validationResult(req); //if errors from user_request.js
@@ -258,6 +274,11 @@ update_cart_calculations = async (cart_id) => {
 };
 
 exports.checkout = async (req, res) => {
+  const errors = validationResult(req); //if errors from user_request.js
+  if (!errors.isEmpty()) {
+    res.status(422).json({ errors: errors.array() });
+    return;
+  }
   console.log("checkout called");
   const mollieClient = createMollieClient({
     apiKey: "test_bv74rGDe9wC22EcHdyw3d7C9BgQtRw",
@@ -268,7 +289,16 @@ exports.checkout = async (req, res) => {
   //first validate if cart id exists
   var cart_id = req.body.cart_id;
   //var cart_id = 12;
-  cart_response = await cart.findOne({ where: { id: cart_id } });
+  cart_response = await cart.findOne({
+                  include: ["orders"],
+                  where: [
+                    {
+                      id: cart_id,
+                    }
+                    
+                  ],
+                });
+  
   if (!cart_response) {
     return res.status(422).json({
       message: "Invalid Cart ID",
