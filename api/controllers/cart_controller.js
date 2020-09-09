@@ -312,7 +312,7 @@ exports.checkout = async (req, res) => {
       },
       description: "Order #" + cart_id,
       method: "creditcard",
-      redirectUrl: "https://backend.develop.pdt.agifly.cloud/cart/complete",
+      redirectUrl: "https://backend.develop.pdt.agifly.cloud/cart/completed_process",
       webhookUrl:
         "https://backend.develop.pdt.agifly.cloud/cart/receive-payment-response",
       //webhookUrl: "https://pdt.requestcatcher.com/",
