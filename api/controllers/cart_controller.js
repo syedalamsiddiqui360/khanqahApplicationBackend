@@ -342,7 +342,7 @@ exports.receivePaymentResponse = (req, res) => {
   console.log("getting payment details");
   //console.log("req",req);
   //console.log("body", req.body);
-  // var transaction_id = req.body.id;
+   var transaction_id = req.body.id;
   // var amount = req.body.amount.value;
   // var status = req.body.status;
   // console.log("transaction_id", transaction_id);
