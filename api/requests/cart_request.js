@@ -17,4 +17,11 @@ exports.deleteCartItem = [
     check('order_id', 'Please select cart item to change quantity.').isLength({ min: 1}),
     check('user_id', 'User ID is required.').isLength({ min: 1}),
 ]
+
+
+exports.checkout = [
+    check('cart_id', 'Please select cart item to change quantity.').isLength({ min: 1}),
+]
+
+
   
