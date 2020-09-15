@@ -9,7 +9,7 @@ router.get("/",  ProductController.get);
 
 router.post("/show/:id",  ProductController.getById);
 
-router.post("/filters_list",  ProductController.getFilters);
+router.post("/filters_list",  ProductController.getFilteredProducts);
 
 router.post("/create",  ProductController.create);
 

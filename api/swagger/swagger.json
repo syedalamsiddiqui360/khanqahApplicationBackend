@@ -81,12 +81,22 @@
     "/products/filters_list": {
       "post": {
         "tags": ["Products"],
-        "summary": "Get Filters List Of Products",
+        "summary": "Get Filtered Products",
         "description": "",
         "operationId": "",
         "consumes": ["application/json"],
         "produces": ["application/json"],
-
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Language ID",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/Filtered-Products"
+            }
+          }
+        ],
         "responses": {
           "default": {
             "description": "successful operation"
@@ -536,6 +546,19 @@
         "password": {
           "type": "string",
           "required": "true"
+        }
+      }
+    },
+    "Filtered-Products": {
+      "type": "object",
+      "properties": {
+        "language_id": {
+          "type": "integer",
+          "required": "false"
+        },
+        "product_type_id": {
+          "type": "integer",
+          "required": "false"
         }
       }
     }

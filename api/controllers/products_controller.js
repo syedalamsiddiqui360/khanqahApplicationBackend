@@ -22,6 +22,39 @@ exports.getAll = async (req, res, next) => {
     res.send("Please Check log DataBase Error");
   }
 };
+
+exports.getFilteredProducts = async (req, res, next) => {
+  var language_id = req.body.language_id ? req.body.language_id : 1;
+  //console.log("language_id: "+language_id);
+
+  var whereStatement = {};
+  if(req.body.product_type_id){
+    whereStatement.product_type_id = req.body.product_type_id;
+  }
+      
+  // if(searchParams.username){
+  //   whereStatement.username = {$like: '%' + searchParams.username + '%'};
+  // }
+      
+  try {
+    const data = await products.findAll({
+      where:whereStatement,
+      include: [
+        {
+          model: product_meta,
+          where: { language_id: language_id },
+        },
+        "product_files","product_type"
+      ],
+    });
+    res.send({ data });
+  } catch (e) {
+    console.log(e);
+    res.statusCode = 300;
+    res.send("Please Check log DataBase Error");
+  }
+};
+
 exports.get = async (req, res, next) => {
   try {
     const data = await products.findAll({
