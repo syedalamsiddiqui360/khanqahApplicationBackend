@@ -1,14 +1,16 @@
 const user = require("../../database/models/users");
-const user_type = require("../../database/models/user_type");
+//const user_type = require("../../database/models/user_type");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { validationResult } = require("express-validator");
 require("dotenv").config();
 
+
 //get  all users from user model
 exports.getAllUsers = async (req, res, next) => {
   try {
     const data = await user.findAll({ where: { deletedAt: null } });
+    ;
     res.send({ data });
   } catch (e) {
     res.statusCode = 300;

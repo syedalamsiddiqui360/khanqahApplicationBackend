@@ -1,4 +1,5 @@
 const express = require("express");
+const upload = require('express-fileupload')
 const app = express();
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
@@ -13,8 +14,8 @@ var customSwaggerOptions = {
     authAction: {
       JWT: {
         name: "JWT",
-        schema: {
-          type: "apiKey",
+        type: "apiKey",
+          schema: {
           in: "header",
           name: "x-access-token",
           description: "",
@@ -31,21 +32,22 @@ app.use(
   swaggerUi.setup(swaggerDocument, customSwaggerOptions)
 );
 
+app.use(upload())
+
 
 const userRoutes = require("./api/routes/user");
-const productRoutes = require("./api/routes/products");
-const languageRoutes = require("./api/routes/languages");
-const cmsPageRoutes = require("./api/routes/cms_pages");
-const menuLinksRoutes = require("./api/routes/menu_links");
-const cartRoutes = require("./api/routes/cart");
-const orderRoutes = require("./api/routes/order");
-const productTypeRoutes = require("./api/routes/product_types");
+const audioRoutes = require("./api/routes/audio");
+const personRoutes = require("./api/routes/person");
+const typeRoutes = require("./api/routes/type");
+const categoryRoutes = require("./api/routes/category");
+//const menuLinksRoutes = require("./api/routes/menu_links");
+
 
 app.use(morgan("dev")); // it will log all the requests.
 app.use(bodyParser.urlencoded({ extended: false })); // it will handle request body
 app.use(bodyParser.json()); // it will handle request body
 
-//handling cors
+//handling cor
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
@@ -61,13 +63,11 @@ app.use((req, res, next) => {
 
 
 app.use("/user", userRoutes);
-app.use("/products", productRoutes);
-app.use("/languages", languageRoutes);
-app.use("/page-content", cmsPageRoutes);
-app.use("/menu-links", menuLinksRoutes);
-app.use("/cart", cartRoutes);
-app.use("/order", orderRoutes);
-app.use("/product_type", productTypeRoutes);
+app.use("/audio", audioRoutes);
+app.use("/type", typeRoutes);
+app.use("/person", personRoutes);
+app.use("/category", categoryRoutes);
+
 
 // //error handling
 app.use((req, res, next) => {

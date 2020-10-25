@@ -1,8 +1,6 @@
 # misc
 .idea
 
-# pkgs
-node_modules/
 
 # build
 build
@@ -11,7 +9,6 @@ build
 npm-debug.log
 
 # dotfiles
-.env
 .DS_Store
 
 # cache

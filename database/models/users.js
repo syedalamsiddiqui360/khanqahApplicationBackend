@@ -10,20 +10,6 @@ const user = db.define(
       autoIncrement: true,
       primaryKey: true,
     },
-    language_id: {
-      type: Sequelize.BIGINT(11),
-      references: {
-        model: "languages", //  refers to table name
-        key: "id", //  refers to column name in reference table
-      },
-    },
-    user_type_id: {
-      type: Sequelize.BIGINT(11),
-      references: {
-        model: "user_type", //  refers to table name
-        key: "id", //  refers to column name in reference table
-      },
-    },
     firstname: {
       type: Sequelize.STRING(255),
     },
@@ -42,12 +28,6 @@ const user = db.define(
     },
     phone: {
       type: Sequelize.STRING(20),
-    },
-    vat_number: {
-      type: Sequelize.STRING(255),
-    },
-    company_name: {
-      type: Sequelize.STRING(255),
     },
   },
   {
