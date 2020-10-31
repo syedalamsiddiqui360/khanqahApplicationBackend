@@ -46,11 +46,21 @@ exports.post = async (req, res, next) => {
 };
 
 exports.get = async (req, res, next) => {
-     const id = req.body.id
-     console.log(id)   
   try {
- const data = await type.findAll({where:{person_id:id, deletedAt:null }});
- res.send(data)
+    const data = await type.findAll({ where: {  deletedAt: null } });
+    res.send(data)
+  } catch (e) {
+    res.statusCode = 300;
+    res.send("Please Check log DataBase Error");
+    console.log(e);
+  }
+};
+
+exports.getById = async (req, res, next) => {
+  const id = req.body.id
+  try {
+    const data = await type.findAll({ where: { id: id, deletedAt: null } });
+    res.send(data)
   } catch (e) {
     res.statusCode = 300;
     res.send("Please Check log DataBase Error");

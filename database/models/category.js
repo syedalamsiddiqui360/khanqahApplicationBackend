@@ -16,6 +16,7 @@ const table = db.define(
         key: "id", //  refers to column name in reference table
       },
     },
+
     title: {
       type: Sequelize.STRING(255),
     },

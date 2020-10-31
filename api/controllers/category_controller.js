@@ -46,10 +46,34 @@ exports.post = async (req, res, next) => {
   // }
 };
 
-exports.get = async (req, res, next) => {
-  const id = req.body.id    
+exports.getByType = async (req, res, next) => {
+  const typeId = req.body.typeId
   try {
- const data = await category.findAll({where:{type_id:id, deletedAt:null}});
+ const data = await category.findAll({where:{type_id:typeId, deletedAt:null}});
+ res.send(data)
+  } catch (e) {
+    res.statusCode = 300;
+    res.send("Please Check log DataBase Error");
+    console.log(e);
+  }
+};
+
+exports.get = async (req, res, next) => {
+  try {
+ const data = await category.findAll({where:{ deletedAt:null}});
+ res.send(data)
+  } catch (e) {
+    res.statusCode = 300;
+    res.send("Please Check log DataBase Error");
+    console.log(e);
+  }
+};
+
+exports.getByTypeAndPerson = async (req, res, next) => {
+  const typeId = req.body.typeId
+  const personId = req.body.personId
+  try {
+ const data = await category.findAll({where:{type_id:typeId, person_id:personId, deletedAt:null}});
  res.send(data)
   } catch (e) {
     res.statusCode = 300;

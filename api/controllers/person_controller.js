@@ -1,43 +1,19 @@
 const person = require("../../database/models/person");
+const personType = require("../../database/models/person_type");
 
 
 
 exports.post = async (req, res, next) => {
-  var file = req.files.file
-  var fileName = new Date() + file.name
+
 
   const data={
     name: req.body.name,
-    title:req.body.title,
-    type: req.body.type,
-    fileName: req.body.fileName,
-    place: req.body.place,
-    date:req.body.date,
-    category: req.body.category,
-    person: req.body.person,
-    islamiDate: req.body.islamiDate,
-    description: req.body.description
+
   }
-  console.log(req.files)
-  console.log(req.body)
+
   try {
 
-    if (file != null) {
-      file.mv(__dirname + "/uploads/audio/" + fileName, async function (err) {
-        if (err) {
-          res.send(err);
-        }
-        else {
-        //   const output = await audio.create(data)           
-          res.send("file uploaded");
-        }
-      })
-    }
-    else{
-      res.statusCode = 300;
-      res.send("Please Check log DataBase Error");
-      console.log("file is null");
-    }
+
   } catch (e) {
     res.statusCode = 300;
     res.send("Please Check log DataBase Error");
@@ -48,8 +24,29 @@ exports.post = async (req, res, next) => {
 exports.get = async (req, res, next) => {
     
     try {
-   const data = await person.findAll();
+     const {type_id} = req.params
+     console.log(type_id)
+   const data = await person.findAll({where:{type_id:type_id , deletedAt:null}});
    res.send(data)
+    } catch (e) {
+      res.statusCode = 300;
+      res.send("Please Check log DataBase Error");
+      console.log(e);
+    }
+  };
+
+  exports.getByType = async (req, res, next) => {
+   let output=[] 
+    try {
+     const type_id = req.body.type_id
+    //  console.log(type_id)
+   const data = await personType.findAll({where:{type_id:type_id , deletedAt:null}});
+   console.log(data)
+   for(let i=0 ; i<data.length ; i++){
+    output = await person.findAll({where:{ id:data[i].person_id , deletedAt:null}});
+   }
+
+   res.send(output)
     } catch (e) {
       res.statusCode = 300;
       res.send("Please Check log DataBase Error");
