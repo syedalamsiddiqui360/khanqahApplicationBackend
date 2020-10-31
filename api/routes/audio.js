@@ -13,7 +13,6 @@ router.post("/download",    bayanController.download);
 router.get("/get/:fileName",    bayanController.get);
 
 router.post("/get_all_ashar",    bayanController.getAllAshar);
-router.post("/get_count_ashar",    bayanController.getCountAshar);
 
 router.post("/get_all_by_person",    bayanController.getAllByPerson);
 router.post("/get_all_by_category",    bayanController.getAllByCategory);

@@ -10,5 +10,7 @@ const personController = require("../controllers/person_controller");
 router.post("/post",    personController.post);
 
 router.post("/get",    personController.get);
+router.post("/get_by_type",    personController.getByType);
 
 module.exports = router;
+ 
