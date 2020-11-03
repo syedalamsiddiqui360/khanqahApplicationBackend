@@ -71,14 +71,14 @@ exports.download = async (req, res, next) => {
   }
 };
 
-exports.getAllAshar = async (req, res, next) => {
+exports.getAll = async (req, res, next) => {
   let output = [];
   let count = 0;
-  const { category_id, offset, limit } = req.body
+  const { type_id, offset, limit } = req.body
   const data = {
-    category_id:category_id,
     offset: offset,
-    limit: limit
+    limit: limit,
+    type_id:type_id,
   }
   try {
     await audio.findAndCountAll({
@@ -88,12 +88,8 @@ exports.getAllAshar = async (req, res, next) => {
       .then(function (result) {
         count = result.count;
         output = result.rows;
-        // console.log(result.count);
-        // console.log(result.rows);
       });
 
-    // const data = await audio.findAll({ where: { deletedAt: null } })
-    // const count = await audio.count({ where: { deletedAt: null } })
     res.send({ data: output, length: count })
   } catch (e) {
     res.statusCode = 300;
@@ -103,29 +99,25 @@ exports.getAllAshar = async (req, res, next) => {
 };
 
 
-exports.getByCategory = async (req, res, next) => {
+exports.getAllByCategory = async (req, res, next) => {
   let output = [];
   let count = 0;
   const { category_id, offset, limit } = req.body
   const data = {
-    category_id:category_id,
+    category_id: category_id,
     offset: offset,
     limit: limit
   }
   try {
     await audio.findAndCountAll({
       offset: data.offset,
-      limit: data.limit
+      limit: data.limit,
+      where: { category_id: category_id, deletedAt: null }
     })
       .then(function (result) {
         count = result.count;
         output = result.rows;
-        // console.log(result.count);
-        // console.log(result.rows);
       });
-
-    // const data = await audio.findAll({ where: { deletedAt: null } })
-    // const count = await audio.count({ where: { deletedAt: null } })
     res.send({ data: output, length: count })
   } catch (e) {
     res.statusCode = 300;
@@ -136,10 +128,10 @@ exports.getByCategory = async (req, res, next) => {
 
 exports.getAllByPerson = async (req, res, next) => {
   try {
-    const person = req.body.person
-    console.log(person)
+    const person_id = req.body.person_id
+    // console.log(person)
 
-    const data = await audio.findAll({ where: { person: person, deletedAt: null } })
+    const data = await audio.findAll({ where: { person_id: person_id, deletedAt: null } })
 
     res.send(data)
   } catch (e) {
@@ -151,10 +143,10 @@ exports.getAllByPerson = async (req, res, next) => {
 
 exports.getAllByCategory = async (req, res, next) => {
   try {
-    const category = req.body.category
-    console.log(category)
+    const category_id = req.body.category_id
+    // console.log(category)
 
-    const data = await audio.findAll({ where: { category: category, deletedAt: null } })
+    const data = await audio.findAll({ where: { category_id: category_id, deletedAt: null } })
 
     res.send(data)
   } catch (e) {
@@ -166,11 +158,11 @@ exports.getAllByCategory = async (req, res, next) => {
 
 exports.getAllByPersonAndcategory = async (req, res, next) => {
   try {
-    const person = req.body.person
-    const category = req.body.category
-    console.log(person)
+    const person_id = req.body.person_id
+    const category_id = req.body.category_id
+    // console.log(person)
 
-    const data = await audio.findAll({ where: { person: person, category: category, deletedAt: null } })
+    const data = await audio.findAll({ where: { person_id: person_id, category_id: category_id, deletedAt: null } })
 
     res.send(data)
   } catch (e) {
@@ -182,11 +174,11 @@ exports.getAllByPersonAndcategory = async (req, res, next) => {
 
 exports.getAllByTypeAndPerson = async (req, res, next) => {
   try {
-    const person = req.body.person
-    const type = req.body.type
-    console.log(person)
+    const person_id = req.body.person_id
+    const type_id = req.body.type_id
+    // console.log(person)
 
-    const data = await audio.findAll({ where: { person: person, type: type, deletedAt: null } })
+    const data = await audio.findAll({ where: { person_id: person_id, type_id: type_id, deletedAt: null } })
 
     res.send(data)
   } catch (e) {
@@ -198,11 +190,11 @@ exports.getAllByTypeAndPerson = async (req, res, next) => {
 
 exports.getAllByTypeAndcategory = async (req, res, next) => {
   try {
-    const type = req.body.type
-    const category = req.body.category
-    console.log(type)
+    const type_id = req.body.type_id
+    const category_id = req.body.category_id
+    // console.log(type)
 
-    const data = await audio.findAll({ where: { type: type, category: category, deletedAt: null } })
+    const data = await audio.findAll({ where: { type_id: type_id, category_id: category_id, deletedAt: null } })
 
     res.send(data)
   } catch (e) {
@@ -214,12 +206,11 @@ exports.getAllByTypeAndcategory = async (req, res, next) => {
 
 exports.getAllByTypeAndPersonAndcategory = async (req, res, next) => {
   try {
-    const person = req.body.person
-    const category = req.body.category
-    const type = req.body.type
-    console.log(person)
+    const person_id = req.body.person_id
+    const category_id = req.body.category_id
+    const type_id = req.body.type_id
 
-    const data = await audio.findAll({ where: { type: type, person: person, category: category, deletedAt: null } })
+    const data = await audio.findAll({ where: { type_id: type_id, person_id: person_id, category_id: category_id, deletedAt: null } })
 
     res.send(data)
   } catch (e) {
